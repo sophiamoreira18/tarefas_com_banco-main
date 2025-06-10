@@ -3,10 +3,10 @@ namespace App\Database;
 
 class Mariadb {
     private string $host = "localhost"; // endereço do servidor MariaDB
-    private string $dbname = "my_tarefas"; // nome do banco de dados
+    private string $dbname = "my_Tarefas"; // nome do banco de dados
     private string $username = "root"; // usuário do banco de dados
     private string $password = "123456"; // senha do banco de dados
-    private \PDO $connection =  null; // conexão PDO com o banco
+    private ?\PDO $connection =  NULL; // conexão PDO com o banco
 
     public function __construct() {
         try {

@@ -14,7 +14,7 @@ class Usuario
   public ?int $id = null;
   public string $nome = "";
   public string $login = "";
-  public string $senha = false;
+  public string $senha = "";
   public string $email = "";
   public string $foto_path = "";
   // criar a propriedade de conexão igual a classe tarefas
@@ -29,7 +29,7 @@ class Usuario
       ':id' => $this->id,
       ':nome' => $this-> nome,
       ':login' => $this->login,
-      ':senha' => $this->senha,
+      ':senha' => password_hash($this->senha, PASSWORD_DEFAULT),
       ':email' => $this->email,
       ':foto_path' => $this->foto_path
     ]);
