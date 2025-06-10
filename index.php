@@ -18,6 +18,13 @@ $app->get('/usuario/{id}/tarefas', function (Request $request, Response $respons
     $response->getBody()->write(json_encode($tarefas));
     return $response;
 });
+$app->get('/tarefas/{id}', function (Request $request, Response $response, array $args) use ($banco) {
+    $user_id = (int)$args['id'];
+    $tarefa = new Tarefa($banco->getConnection());
+    $resultado = $tarefa->getTarefaById($user_id);
+    $response->getBody()->write(json_encode($resultado));
+    return $response;
+});
 
 // cadastra usuário
 $app->post('/usuario', function(Request $request, Response $response, array $args) use ($banco)
@@ -26,6 +33,7 @@ $app->post('/usuario', function(Request $request, Response $response, array $arg
     $body = $request->getParsedBody();
     try{
         $usuario = new Usuario($banco->getConnection());
+        $usuario->id = $args['id'];
         $usuario->nome = $body['nome'] ?? '';
         $usuario->login = $body['login'] ?? '';
         $usuario->senha = $body['senha'] ?? '';
@@ -46,5 +54,84 @@ $app->post('/usuario', function(Request $request, Response $response, array $arg
     return $response->withHeader('Content-Type', 'application/json');
 });
 
+$app->post('/tarefa', function(Request $request, Response $response, array $args) use ($banco)
+{
+    $campos_obrigatórios = ['titulo', 'descricao', 'status', 'user_id'];
+    $body = $request->getParsedBody();
+    try{
+        $Tarefa = new Tarefa($banco->getConnection());
+        $Tarefa->titulo = $body['titulo'] ?? '';
+        $Tarefa->descricao = $body['descricao'] ?? '';
+        $Tarefa->status = $body['status'] ?? '';
+        $Tarefa->user_id = $body['user_id'] ?? '';
+        foreach ($campos_obrigatórios as $campo) {
+            if (empty($Tarefa->{$campo})) {
+               throw new \Exception("O campo {$campo} é obrigatório.");
+            }
+        }
+    }catch(\Exception $exception){
+        $response->getBody()->write(json_encode(['message' => $exception->getMessage()
+        ]));
+    }
+    $response->getBody()->write(json_encode([
+        'message' => 'Tarefa cadastrada com sucesso!'
+    ]));
+    return $response->withHeader('Content-Type', 'application/json');
+});
 
+$app->put('/tarefa/{id}', function(Request $request, Response $response, array $args) use ($banco)
+{
+    $campos_obrigatórios = ['nome', 'login', 'senha', "email"];
+    $body = $request->getParsedBody();
+    try{
+       $Tarefa = new Tarefa($banco->getConnection());
+        $Tarefa->titulo = $body['titulo'] ?? '';
+        $Tarefa->descricao = $body['descricao'] ?? '';
+        $Tarefa->status = $body['status'] ?? '';
+        $Tarefa->user_id = $body['user_id'] ?? '';
+        foreach ($campos_obrigatórios as $campo) {
+            if (empty($Tarefa->{$campo})) {
+               throw new \Exception("O campo {$campo} é obrigatório.");
+            }
+        }
+        $Tarefa->update();
+    }catch(\Exception $exception){
+        $response->getBody()->write(json_encode(['message' => $exception->getMessage()
+]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
+    }
+    $response->getBody()->write(json_encode([
+        'message' => 'Tarefa atualizada com sucesso!'
+    ]));
+    return $response->withHeader('Content-Type', 'application/json');
+});
+
+$app->put('/usuario/{id}', function(Request $request, Response $response, array $args) use ($banco)
+{
+    $campos_obrigatórios = ['nome', 'login', 'senha', "email"];
+    $body = $request->getParsedBody();
+    try{
+        $usuario = new Usuario($banco->getConnection());
+        $usuario->id = $args['id'];
+        $usuario->nome = $body['nome'] ?? '';
+        $usuario->login = $body['login'] ?? '';
+        $usuario->senha = $body['senha'] ?? '';
+        $usuario->email = $body['email'] ?? '';
+        $usuario->foto_path = $body['foto_path'] ?? '';
+        foreach ($campos_obrigatórios as $campo) {
+            if (empty($usuario->{$campo})) {
+               throw new \Exception("O campo {$campo} é obrigatório.");
+            }
+        }
+        $usuario->update();
+    }catch(\Exception $exception){
+        $response->getBody()->write(json_encode(['message' => $exception->getMessage()
+]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
+    }
+    $response->getBody()->write(json_encode([
+        'message' => 'Usuário atualizado com sucesso!'
+    ]));
+    return $response->withHeader('Content-Type', 'application/json');
+});
 $app->run();

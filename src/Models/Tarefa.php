@@ -6,11 +6,11 @@ class Tarefa
   private \PDO $connection;
   // Atributos da classe Tarefa
 
-  private ?int $id = null;
-  private string $titulo = "";
-  private string $descricao = "";
-  private bool $status = false;
-  private int $user_id = 0;
+  public ?int $id = null;
+  public string $titulo = "";
+  public string $descricao = "";
+  public bool $status = false;
+  public int $user_id = 0;
 
   public function __construct(\PDO $connection)
   {
