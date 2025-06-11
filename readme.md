@@ -121,8 +121,9 @@ create table usuario(
 
 # API de Usuários e Tarefas
 
-**Aluno:** João da Silva  
+**Aluno:** Sophia da Costa Moreira 
 **Data da entrega:** 10/06/2025
+**Turma:** 2º Ano
 
 ## Endpoints Implementados
 
@@ -140,7 +141,7 @@ create table usuario(
 ## Testes
 
 ### ✔️ Criar tarefa
-![print criar](prints/criar_tarefa.png)
+![print criar](src/images/Captura%20de%20tela%202025-06-11%20160957.png)
 
 ### ✔️ Listar tarefas
 ![print listar](prints/listar_tarefas.png)
