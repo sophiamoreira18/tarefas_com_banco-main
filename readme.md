@@ -119,4 +119,40 @@ create table usuario(
 )
 ```
 
+# API de Usuários e Tarefas
+
+**Aluno:** João da Silva  
+**Data da entrega:** 10/06/2025
+
+## Endpoints Implementados
+
+### Usuário
+- POST /usuario
+- PUT /usuario/{id}
+
+### Tarefa
+- POST /tarefa
+- GET /tarefas
+- PUT /tarefa/{id}
+- DELETE /tarefa/{id}
+- GET /usuario/{id}/tarefas
+
+## Testes
+
+### ✔️ Criar tarefa
+![print criar](prints/criar_tarefa.png)
+
+### ✔️ Listar tarefas
+![print listar](prints/listar_tarefas.png)
+
+### ✔️ Atualizar tarefa
+![print atualizar](prints/atualizar_tarefa.png)
+
+### ✔️ Deletar tarefa
+![print deletar](prints/deletar_tarefa.png)
+
+## Instruções
+
+Clone o projeto, instale as dependências com `composer install`, e rode com `php -S localhost:8000 -t public`.
+
 

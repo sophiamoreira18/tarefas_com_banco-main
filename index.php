@@ -134,4 +134,25 @@ $app->put('/usuario/{id}', function(Request $request, Response $response, array 
     ]));
     return $response->withHeader('Content-Type', 'application/json');
 });
+
+$app->delete('/usuario/{id}', 
+    function(Request $request, Response $response, array $args) use ($banco)
+ {
+    $id = $args['id'];
+    $usuario = new Usuario($banco->getConnection());
+    $usuario->delete($id);
+    $response->getBody()->write(json_encode(['message' => 'Usuário excluído']));
+    return $response->withHeader('Content-Type', 'application/json');
+});
+
+$app->delete('/tarefa/{id}', 
+    function(Request $request, Response $response, array $args) use ($banco)
+ {
+    $id = $args['id'];
+    $Tarefa = new Tarefa($banco->getConnection());
+    $Tarefa->delete($id);
+    $response->getBody()->write(json_encode(['message' => 'Tarefa excluída']));
+    return $response->withHeader('Content-Type', 'application/json');
+});
+
 $app->run();
